@@ -2,16 +2,16 @@ import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
 
-# Definir a URL do site
+#### Definir a URL do site
 base_url = "https://folha.qconcursos.com/"
 
-# Função para rastrear URLs do site
+#### Função para rastrear URLs do site
 def rastrear_site(url):
     urls = set()
     response = requests.get(url)
     soup = BeautifulSoup(response.text, "html.parser")
 
-    # Encontrar todos os links internos no site
+    #### Encontrar todos os links internos no site
     for link in soup.find_all("a", href=True):
         href = link['href']
         if href.startswith('/'):  # Links internos
@@ -22,14 +22,14 @@ def rastrear_site(url):
     
     return urls
 
-# Coletar URLs do site
+# Coletar URLs do site#########
 urls = rastrear_site(base_url)
 
-# Gerar o conteúdo do sitemap.xml
+# Gerar o conteúdo do sitemap.xml#########
 sitemap_content = '<?xml version="1.0" encoding="UTF-8"?>\n'
 sitemap_content += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
 
-# Adicionar URLs ao sitemap
+# Adicionar URLs ao sitemap######
 for url in urls:
     sitemap_content += "  <url>\n"
     sitemap_content += f"    <loc>{url}</loc>\n"
@@ -40,7 +40,7 @@ for url in urls:
 
 sitemap_content += '</urlset>'
 
-# Salvar o arquivo sitemap.xml
+# Salvar o arquivo sitemap.xml######
 with open("sitemap.xml", "w") as file:
     file.write(sitemap_content)
 
